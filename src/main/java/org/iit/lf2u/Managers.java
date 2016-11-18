@@ -32,7 +32,7 @@ public class Managers {
 		// calls the "Get All Lamps" use case
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String s = gson.toJson(mi.getAllManagers());
-		return Response.status(Response.Status.OK).entity(s).build();
+		return Response.status(200).entity(s).build();
 	}
 
 	// GET /managers/accounts/{mid}

@@ -115,12 +115,11 @@ public class CustomerManager implements CustomerInterface {
 	public Order createOrder(String cid, Order newOrder) {
 
 		float accumulator = 0.0f;
-		
+
 		// create object for farmer report
 		Ordered_by order_by = new Ordered_by();
 		FarmerOrders newFarmerOrder = new FarmerOrders();
-		
-		
+
 		//
 
 		LocalDate localDate = LocalDate.now();
@@ -134,7 +133,7 @@ public class CustomerManager implements CustomerInterface {
 		newOrder.setPlanned_delivery_date(DateTimeFormatter.ofPattern("yyyMMdd").format(tomorrow));
 
 		String farm = newOrder.getFid();
-		
+
 		// we get the info from the farm
 		Client client = Client.create();
 
@@ -148,7 +147,6 @@ public class CustomerManager implements CustomerInterface {
 		Farm_info a = gson.fromJson(output, Farm_info.class);
 		a.setFidOfFarmInfo(farm);
 		newOrder.setFarm_info(a);
-		
 
 		List<OrderDetail> order_details = newOrder.getOrderDetail();
 		List<order_detail_presentation> order_detail_presentations = new ArrayList<order_detail_presentation>();
@@ -219,15 +217,15 @@ public class CustomerManager implements CustomerInterface {
 				newOrder.getDelivery_charge(), newOrder.getOrder_total()));
 
 		// complete the FarmerReports object
-		
+
 		Customer theclient = findCostumerID(cid);
-		
+
 		order_by.setName(theclient.getName());
 		order_by.setEmail(theclient.getEmail());
 		order_by.setPhone(theclient.getPhone());
-		
-		String delivery_add = theclient.getStreet() + " , "+ theclient.getZip();
-		
+
+		String delivery_add = theclient.getStreet() + " , " + theclient.getZip();
+
 		newFarmerOrder.setOid(newOrder.getOID());
 		newFarmerOrder.setProducts_total(newOrder.getProducts_total());
 		newFarmerOrder.setDelivery_charge(newOrder.getDelivery_charge());
@@ -240,13 +238,10 @@ public class CustomerManager implements CustomerInterface {
 		newFarmerOrder.setDelivery_address(delivery_add);
 		newFarmerOrder.setNote(newOrder.getDelivery_note());
 		newFarmerOrder.setOrder_detail(order_detail_presentations);
-		
-		
+
 		FarmerManager test = new FarmerManager();
 		test.updateAFarmerOrder(farm, "2", newFarmerOrder);
-		
-	
-		
+
 		Orders.add(newOrder);
 		// Presentations.add(new Presentation())
 		return newOrder;
@@ -283,4 +278,14 @@ public class CustomerManager implements CustomerInterface {
 		}
 	}
 
+}
+
+class FarmDeserializer implements JsonDeserializer<Farm_info> {
+	@Override
+	public Farm_info deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
+		// Get the "content" element from the parsed JSON
+		JsonElement content = je.getAsJsonObject().get("farm_info");
+		return new Gson().fromJson(content, Farm_info.class);
+
+	}
 }
