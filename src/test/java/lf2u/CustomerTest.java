@@ -59,7 +59,7 @@ public class CustomerTest extends JerseyTest {
 
 	}
 	
-	
+	/*
 	@Test
 	public void CreateOrder(){
 		
@@ -70,9 +70,8 @@ public class CustomerTest extends JerseyTest {
 		Order newOrder = new Order("123", list);
 		
 		Order order = fi.createOrder("1", newOrder);
-		
-		
-	}
 	
+	}
+	*/
 
 }

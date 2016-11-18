@@ -47,6 +47,9 @@ import org.json.*;
 public class Farmers {
 
 	private FarmerInterface fi = new FarmerManager();
+	private ManagerInterface mi = new ManagerManager();
+
+	
 
 	// GET /farmers
 	@GET
@@ -223,13 +226,11 @@ public class Farmers {
 
 			// ==========
 
-			Client client = Client.create();
-
-			WebResource webResource = client
-					.resource("http://localhost:8080/lf2u/managers/catalog/" + mp.getGcpid());
-
-			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-			if (response.getStatus() != 404) {
+			boolean exist = mi.doeGcpidExists(mp.getGcpid());
+			
+			System.out.println("test : "+exist);
+			
+			if (exist) {
 				// ==========
 
 				mp.setBelongs_to_whom(fid);

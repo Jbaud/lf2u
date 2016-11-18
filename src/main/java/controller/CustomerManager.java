@@ -32,6 +32,8 @@ public class CustomerManager implements CustomerInterface {
 	private static List<Presentation> Presentations = new ArrayList<Presentation>();
 
 	private FarmerInterface fi = new FarmerManager();
+	private ManagerInterface mi = new ManagerManager();
+	
 
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -134,6 +136,12 @@ public class CustomerManager implements CustomerInterface {
 
 		String farm = newOrder.getFid();
 
+		Farmer getFarmer = fi.viewFarmer(farm);
+		System.out.println("using hack ->>"+getFarmer.getFarmInfo().getName());
+		
+		Farm_info getFarm = getFarmer.getFarmInfo();
+		
+		
 		// we get the info from the farm
 		Client client = Client.create();
 
@@ -145,6 +153,8 @@ public class CustomerManager implements CustomerInterface {
 
 		Gson gson = new GsonBuilder().registerTypeAdapter(Farm_info.class, new FarmDeserializer()).create();
 		Farm_info a = gson.fromJson(output, Farm_info.class);
+		// end 
+		
 		a.setFidOfFarmInfo(farm);
 		newOrder.setFarm_info(a);
 
@@ -154,6 +164,10 @@ public class CustomerManager implements CustomerInterface {
 		Iterator<OrderDetail> ma = order_details.listIterator();
 		while (ma.hasNext()) {
 			OrderDetail m = ma.next();
+			
+			FarmerProduct getfarmerProduct = fi.getFarmerProduct(m.getFspidFromOrderDetail());
+			
+			
 			// get FarmerProduct
 			Client client2 = Client.create();
 			WebResource fetchFarmerProduct = client2.resource(
@@ -166,6 +180,9 @@ public class CustomerManager implements CustomerInterface {
 
 			Gson gsonGetFarmerProduct = new Gson();
 			FarmerProduct fp = gsonGetFarmerProduct.fromJson(infoExtracedFromResponse, FarmerProduct.class);
+			//end of get farmer product
+			
+			
 			// get name of product
 			WebResource fetchname = client
 					.resource("http://localhost:8080/lf2u/managers/catalog/" + fp.getGcpid() + "/getname");
@@ -175,11 +192,23 @@ public class CustomerManager implements CustomerInterface {
 
 			Gson extractname = new Gson();
 			String nameOfProduct = extractname.fromJson(infoExtracedFromGcpid, String.class);
-
-			System.out.println("price ->" + fp.getPrice());
-			System.out.println("amount ->" + m.getAmount());
-
+			
+			// end of get name
+			
+			//replace 
+			List<ManagerProduct> getNameOfProduct = mi.getAllManagersProducts();
+			String nameOfTheProduct;
+			Iterator<ManagerProduct> searchForName = getNameOfProduct.listIterator();
+			while (searchForName.hasNext()) {
+				ManagerProduct next = searchForName.next();
+				if (next.getGcpid().equals(fp.getGcpid()))
+					nameOfTheProduct = next.getName();
+			}
+			// end of replace
+			
 			float amount = m.getAmount();
+			
+			
 
 			m.setName(nameOfProduct);
 			m.setProductUnit(fp.getProduct_unit());
@@ -204,7 +233,12 @@ public class CustomerManager implements CustomerInterface {
 
 		JSONObject obj = new JSONObject(infoExtracedFromResponse);
 		float farmer_delivery_charge = BigDecimal.valueOf(obj.getDouble("delivery_charge")).floatValue();
-
+		// end of get delivery charge
+		
+		//
+		float del_charge = getFarmer.viewDeliveryCharge();
+		//
+		
 		newOrder.setDelivery_charge(farmer_delivery_charge);
 		newOrder.setOrder_total(farmer_delivery_charge + accumulator);
 
