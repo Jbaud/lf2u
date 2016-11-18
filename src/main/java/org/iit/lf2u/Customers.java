@@ -115,7 +115,7 @@ public class Customers {
 			for (OrderDetail d : tocheck) {
 				Client client = Client.create();
 
-				WebResource webResource = client.resource("http://localhost:8080/lf2u/webapi/farmers/" + cud.getFid()
+				WebResource webResource = client.resource("http://localhost:8080/lf2u/farmers/" + cud.getFid()
 						+ "/products/" + d.getFspidFromOrderDetail());
 
 				ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);

@@ -117,7 +117,8 @@ public class CustomerManager implements CustomerInterface {
 	public Order createOrder(String cid, Order newOrder) {
 
 		float accumulator = 0.0f;
-
+		String nameOfTheProduct = null;
+		
 		// create object for farmer report
 		Ordered_by order_by = new Ordered_by();
 		FarmerOrders newFarmerOrder = new FarmerOrders();
@@ -167,80 +168,40 @@ public class CustomerManager implements CustomerInterface {
 			
 			FarmerProduct getfarmerProduct = fi.getFarmerProduct(m.getFspidFromOrderDetail());
 			
-			
-			// get FarmerProduct
-			Client client2 = Client.create();
-			WebResource fetchFarmerProduct = client2.resource(
-					"http://localhost:8080/lf2u/farmers/" + farm + "/products/" + m.getFspidFromOrderDetail());
-
-			ClientResponse details = fetchFarmerProduct.accept("application/json").get(ClientResponse.class);
-			String infoExtracedFromResponse = details.getEntity(String.class);
-
-			System.out.println(infoExtracedFromResponse);
-
-			Gson gsonGetFarmerProduct = new Gson();
-			FarmerProduct fp = gsonGetFarmerProduct.fromJson(infoExtracedFromResponse, FarmerProduct.class);
-			//end of get farmer product
-			
-			
-			// get name of product
-			WebResource fetchname = client
-					.resource("http://localhost:8080/lf2u/managers/catalog/" + fp.getGcpid() + "/getname");
-
-			ClientResponse nameOfCorrespondingProduct = fetchname.accept("application/json").get(ClientResponse.class);
-			String infoExtracedFromGcpid = nameOfCorrespondingProduct.getEntity(String.class);
-
-			Gson extractname = new Gson();
-			String nameOfProduct = extractname.fromJson(infoExtracedFromGcpid, String.class);
-			
-			// end of get name
-			
 			//replace 
 			List<ManagerProduct> getNameOfProduct = mi.getAllManagersProducts();
-			String nameOfTheProduct;
+			
 			Iterator<ManagerProduct> searchForName = getNameOfProduct.listIterator();
 			while (searchForName.hasNext()) {
 				ManagerProduct next = searchForName.next();
-				if (next.getGcpid().equals(fp.getGcpid()))
+				if (next.getGcpid().equals(getfarmerProduct.getGcpid()))
 					nameOfTheProduct = next.getName();
 			}
 			// end of replace
 			
 			float amount = m.getAmount();
 			
-			
+			System.out.println(nameOfTheProduct);
 
-			m.setName(nameOfProduct);
-			m.setProductUnit(fp.getProduct_unit());
-			m.setPrice(fp.getPrice());
-			m.setline_item_total(fp.getPrice() * m.getAmount());
-			accumulator = accumulator + fp.getPrice() * m.getAmount();
+			m.setName(nameOfTheProduct);
+			m.setProductUnit(getfarmerProduct.getProduct_unit());
+			m.setPrice(getfarmerProduct.getPrice());
+			m.setline_item_total(getfarmerProduct.getPrice() * m.getAmount());
+			accumulator = accumulator + getfarmerProduct.getPrice() * m.getAmount();
 
-			String amount_to_string = Float.toString(amount) + " " + fp.getProduct_unit();
-			String price = Float.toString(fp.getPrice()) + " per " + fp.getProduct_unit();
+			String amount_to_string = Float.toString(amount) + " " + getfarmerProduct.getProduct_unit();
+			String price = Float.toString(getfarmerProduct.getPrice()) + " per " + getfarmerProduct.getProduct_unit();
 
-			order_detail_presentations.add(new order_detail_presentation(m.getFspidFromOrderDetail(), nameOfProduct,
-					amount_to_string, price, fp.getPrice() * amount));
+			order_detail_presentations.add(new order_detail_presentation(m.getFspidFromOrderDetail(), nameOfTheProduct,
+					amount_to_string, price, getfarmerProduct.getPrice() * amount));
 		}
 		newOrder.setProducts_total(accumulator);
-
-		// fetch delivery charge
-		WebResource fetchFarmer = client
-				.resource("http://localhost:8080/lf2u/farmers/" + farm + "/delivery_charge");
-
-		ClientResponse details = fetchFarmer.accept("application/json").get(ClientResponse.class);
-		String infoExtracedFromResponse = details.getEntity(String.class);
-
-		JSONObject obj = new JSONObject(infoExtracedFromResponse);
-		float farmer_delivery_charge = BigDecimal.valueOf(obj.getDouble("delivery_charge")).floatValue();
-		// end of get delivery charge
 		
-		//
 		float del_charge = getFarmer.viewDeliveryCharge();
 		//
 		
-		newOrder.setDelivery_charge(farmer_delivery_charge);
-		newOrder.setOrder_total(farmer_delivery_charge + accumulator);
+		newOrder.setDelivery_charge(del_charge);
+		newOrder.setOrder_total(del_charge + accumulator);
 
 		Farm_info_Presentation tempFarm = new Farm_info_Presentation(farm, a.getName(), a.getAdd(), a.getPhone(),
 				a.getWeb());
