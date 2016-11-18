@@ -78,7 +78,7 @@ public class Farmers {
 		} else {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String s = gson.toJson(m);
-			return Response.ok(s).build();
+			return Response.status(201).entity(s).build();
 		}
 	}
 
@@ -226,7 +226,7 @@ public class Farmers {
 			Client client = Client.create();
 
 			WebResource webResource = client
-					.resource("http://localhost:8080/lf2u/webapi/managers/catalog/" + mp.getGcpid());
+					.resource("http://localhost:8080/lf2u/managers/catalog/" + mp.getGcpid());
 
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 			if (response.getStatus() != 404) {

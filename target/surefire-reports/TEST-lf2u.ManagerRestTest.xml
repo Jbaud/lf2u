@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="lf2u.MyTest" time="0" errors="0" skipped="0">
+<testsuite tests="5" failures="0" name="lf2u.ManagerRestTest" time="1.907" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/jre/lib"/>
@@ -62,5 +62,9 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="lf2u.MyTest" name="multiplicationOfZeroIntegersShouldReturnZero" time="0"/>
+  <testcase classname="lf2u.ManagerRestTest" name="SeeManagerAccount" time="1.379"/>
+  <testcase classname="lf2u.ManagerRestTest" name="testGetAllManager" time="0.184"/>
+  <testcase classname="lf2u.ManagerRestTest" name="testFetchAll" time="0.123"/>
+  <testcase classname="lf2u.ManagerRestTest" name="TestWithManagersNonExistent" time="0.105"/>
+  <testcase classname="lf2u.ManagerRestTest" name="testCreate" time="0.116"/>
 </testsuite>

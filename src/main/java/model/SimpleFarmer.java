@@ -14,4 +14,8 @@ public class SimpleFarmer {
 		this.fid=fid;
 		this.name=name;
 	}
+	
+	public String getFid(){
+		return this.fid;
+	}
 }

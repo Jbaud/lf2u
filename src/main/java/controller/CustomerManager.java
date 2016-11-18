@@ -137,7 +137,7 @@ public class CustomerManager implements CustomerInterface {
 		// we get the info from the farm
 		Client client = Client.create();
 
-		WebResource webResource = client.resource("http://localhost:8080/lf2u/webapi/farmers/" + farm);
+		WebResource webResource = client.resource("http://localhost:8080/lf2u/farmers/" + farm);
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -157,7 +157,7 @@ public class CustomerManager implements CustomerInterface {
 			// get FarmerProduct
 			Client client2 = Client.create();
 			WebResource fetchFarmerProduct = client2.resource(
-					"http://localhost:8080/lf2u/webapi/farmers/" + farm + "/products/" + m.getFspidFromOrderDetail());
+					"http://localhost:8080/lf2u/farmers/" + farm + "/products/" + m.getFspidFromOrderDetail());
 
 			ClientResponse details = fetchFarmerProduct.accept("application/json").get(ClientResponse.class);
 			String infoExtracedFromResponse = details.getEntity(String.class);
@@ -168,7 +168,7 @@ public class CustomerManager implements CustomerInterface {
 			FarmerProduct fp = gsonGetFarmerProduct.fromJson(infoExtracedFromResponse, FarmerProduct.class);
 			// get name of product
 			WebResource fetchname = client
-					.resource("http://localhost:8080/lf2u/webapi/managers/catalog/" + fp.getGcpid() + "/getname");
+					.resource("http://localhost:8080/lf2u/managers/catalog/" + fp.getGcpid() + "/getname");
 
 			ClientResponse nameOfCorrespondingProduct = fetchname.accept("application/json").get(ClientResponse.class);
 			String infoExtracedFromGcpid = nameOfCorrespondingProduct.getEntity(String.class);
@@ -197,7 +197,7 @@ public class CustomerManager implements CustomerInterface {
 
 		// fetch delivery charge
 		WebResource fetchFarmer = client
-				.resource("http://localhost:8080/lf2u/webapi/farmers/" + farm + "/delivery_charge");
+				.resource("http://localhost:8080/lf2u/farmers/" + farm + "/delivery_charge");
 
 		ClientResponse details = fetchFarmer.accept("application/json").get(ClientResponse.class);
 		String infoExtracedFromResponse = details.getEntity(String.class);

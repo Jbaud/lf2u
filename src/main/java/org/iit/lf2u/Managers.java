@@ -6,6 +6,7 @@ import model.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.sun.org.apache.xerces.internal.util.Status;
 
 import java.util.List;
@@ -20,9 +21,7 @@ public class Managers {
 
 	private ManagerInterface mi = new ManagerManager();
 
-	public  List<Manager> getList() {
-		return mi.getAllManagers();
-	}
+	
 	
 	// GET /managers/accounts
 	@GET
@@ -43,7 +42,7 @@ public class Managers {
 		Manager m = mi.viewManager(mid);
 		if (m.isNil()) {
 			// return a 404
-			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for ID: " + mid).build();
+			return Response.status(404).build();
 		} else {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String s = gson.toJson(m);
@@ -70,9 +69,11 @@ public class Managers {
 		JSONObject obj = new JSONObject(name);
 		String n = obj.getString("name");
 		ManagerProduct mp = mi.createAProduct(n);
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String s = gson.toJson(mp);
-		return Response.ok(s).build();
+		
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("gcpid", mp.getGcpid());
+		
+		return Response.status(Response.Status.CREATED).entity(jsonObject.toString()).build();
 	}
 
 	// POST /managers/catalog/{gcpid}
@@ -101,7 +102,8 @@ public class Managers {
 		}
 	}
 
-	// check if a product exists
+	// get a product name
+	// internal method
 	@GET
 		@Path("/catalog/{gcpid}/getname")
 		@Produces(MediaType.APPLICATION_JSON)
