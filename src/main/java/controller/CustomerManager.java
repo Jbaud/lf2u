@@ -142,22 +142,8 @@ public class CustomerManager implements CustomerInterface {
 		
 		Farm_info getFarm = getFarmer.getFarmInfo();
 		
-		
-		// we get the info from the farm
-		Client client = Client.create();
-
-		WebResource webResource = client.resource("http://localhost:8080/lf2u/farmers/" + farm);
-
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-
-		String output = response.getEntity(String.class);
-
-		Gson gson = new GsonBuilder().registerTypeAdapter(Farm_info.class, new FarmDeserializer()).create();
-		Farm_info a = gson.fromJson(output, Farm_info.class);
-		// end 
-		
-		a.setFidOfFarmInfo(farm);
-		newOrder.setFarm_info(a);
+		getFarm.setFidOfFarmInfo(farm);
+		newOrder.setFarm_info(getFarm);
 
 		List<OrderDetail> order_details = newOrder.getOrderDetail();
 		List<order_detail_presentation> order_detail_presentations = new ArrayList<order_detail_presentation>();
@@ -203,8 +189,8 @@ public class CustomerManager implements CustomerInterface {
 		newOrder.setDelivery_charge(del_charge);
 		newOrder.setOrder_total(del_charge + accumulator);
 
-		Farm_info_Presentation tempFarm = new Farm_info_Presentation(farm, a.getName(), a.getAdd(), a.getPhone(),
-				a.getWeb());
+		Farm_info_Presentation tempFarm = new Farm_info_Presentation(farm, getFarm.getName(), getFarm.getAdd(), getFarm.getPhone(),
+				getFarm.getWeb());
 
 		Presentations.add(new Presentation(newOrder.getOID(), newOrder.getOrder_date(),
 				newOrder.getPlanned_delivery_date(), newOrder.getActual_delivery_date(), newOrder.getStatus(), tempFarm,

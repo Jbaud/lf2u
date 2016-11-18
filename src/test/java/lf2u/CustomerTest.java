@@ -26,6 +26,8 @@ import controller.CustomerInterface;
 import controller.CustomerManager;
 import controller.FarmerInterface;
 import controller.FarmerManager;
+import controller.ManagerInterface;
+import controller.ManagerManager;
 import model.Customer;
 import model.Order;
 import model.OrderDetail;
@@ -37,6 +39,8 @@ import com.sun.jersey.api.client.WebResource;
 public class CustomerTest extends JerseyTest {
 
 	private CustomerInterface fi = new CustomerManager();
+	private ManagerInterface mi = new ManagerManager();
+	private FarmerInterface farmerint = new FarmerManager(); 
 
 	@Override
 	public Application configure() {
@@ -59,9 +63,12 @@ public class CustomerTest extends JerseyTest {
 
 	}
 	
-	/*
+	
 	@Test
 	public void CreateOrder(){
+		
+		
+		
 		
 		Customer newCustomer = new Customer("jules", "1", "1", "1", "1");
 		OrderDetail newOrderDetail = new OrderDetail("test", 2.3f);
@@ -72,6 +79,6 @@ public class CustomerTest extends JerseyTest {
 		Order order = fi.createOrder("1", newOrder);
 	
 	}
-	*/
+	
 
 }
