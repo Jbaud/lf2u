@@ -37,4 +37,8 @@ public class Manager{
 		return this.name;
 	}
 	
+	public String getMid(){
+		return this.mid;
+	}
+	
 }

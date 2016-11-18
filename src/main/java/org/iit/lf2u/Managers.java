@@ -47,7 +47,7 @@ public class Managers {
 		} else {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String s = gson.toJson(m);
-			return Response.ok(s).build();
+			return Response.status(200).entity(s).build();
 		}
 	}
 

@@ -58,23 +58,36 @@ public class ManagerRestTest extends JerseyTest {
 
 	@Test
 	public void SeeManagerAccount() {
-		
+
 		Client client = Client.create();
 
 		WebResource webResource = client.resource("http://localhost:9998/managers/accounts");
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-		
+
 		String output = response.getEntity(String.class);
-		System.out.println(output);
 		
-		Type listType = new TypeToken<ArrayList<Manager>>(){}.getType();
+
+		Type listType = new TypeToken<ArrayList<Manager>>() {
+		}.getType();
 
 		List<Manager> a = new Gson().fromJson(output, listType);
-		
+
 		assertEquals(a.get(0).getName(), "Jean");
+		WebResource webResource2 = client.resource("http://localhost:9998/managers/accounts/" + a.get(0).getMid());
+
+		ClientResponse response2 = webResource2.accept("application/json").get(ClientResponse.class);
 		
-		
+		assertEquals("should return status 200", 200, response2.getStatus());
+
+	}
+
+	@Test
+	public void TestWithManagersNonExistent() {
+
+		Response output = target("/managers/catalog/123").request().get();
+		assertEquals("should return status 404", 404, output.getStatus());
+
 	}
 
 	@Test
@@ -92,4 +105,3 @@ public class ManagerRestTest extends JerseyTest {
 	}
 
 }
-
