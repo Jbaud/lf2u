@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.Customer;
 import model.Farmer;
+import model.NullCustomer;
 import model.NullFarmer;
 import model.Presentation;
 
@@ -31,15 +32,12 @@ public class Search implements SearchInterface {
 		Iterator<Farmer> ma = allfarmers.listIterator();
 		while (ma.hasNext()) {
 			Farmer m = ma.next();
-			System.out.println("current : " + m.getFarmInfo() + " key : " + key);
-			System.out.println("current : " + m.getFarmInfo().getName().contains(key));
 			if (m.getFarmerID().contains(key) || m.getFarmInfo().getName().contains(key)
 					|| m.getFarmInfo().getAdd().contains(key) || m.getFarmInfo().getPhone().contains(key)
 					|| m.getFarmInfo().getWeb().contains(key)) {
 				returnFarmer.add(m);
 				return returnFarmer;
 			}
-			System.out.println(m.getInfo().getPersonalName()+" key : "+key+" and .equals : "+m.getInfo().getPersonalName().equals(key));
 			if (m.getInfo().getPersonalName().contains(key) || m.getInfo().getPersonalPhone().contains(key)
 					|| m.getInfo().getPersonalEmail().contains(key)) {
 				returnFarmer.add(m);
@@ -54,8 +52,29 @@ public class Search implements SearchInterface {
 
 	@Override
 	public List<Customer> ifTopicisCustomer(String key) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Customer> allcustomers = ci.getAllCustomers();
+
+		// if empty all
+		if (key.equals("")) {
+			return allcustomers;
+		}
+
+		List<Customer> returnCustomer = new ArrayList<Customer>();
+
+		Iterator<Customer> ma = allcustomers.listIterator();
+		while (ma.hasNext()) {
+			Customer m = ma.next();
+			if (m.getCustomerCID().contains(key) || m.getEmail().contains(key) || m.getName().contains(key)
+					|| m.getPhone().contains(key) || m.getStreet().contains(key) || m.getZip().contains(key)) {
+				returnCustomer.add(m);
+				return returnCustomer;
+			}
+
+		}
+		// there is nothing here
+		returnCustomer.add(new NullCustomer());
+		return (returnCustomer);
 	}
 
 	@Override

@@ -28,23 +28,22 @@ public class SearchFunction {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response search(@QueryParam("topic") String topic, @QueryParam("key") String key) {
 
-		// String topic = info.getQueryParameters().getFirst("topic");
-		// List<String> getSecond = info.getQueryParameters().get("key");
-
-		// max arg is 1
-		// String key = getSecond.get(0);
-
+		if(topic == null){
+			return Response.status(404).build();
+		}
+		
 		System.out.println(topic);
 		System.out.println(key);
 
 		if (topic.equals("farm")) {
-			System.out.println("coucou");
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String s = gson.toJson(si.ifTopicisFarm(key));
 			return Response.status(Response.Status.OK).entity(s).build();
 		}
 		if (topic.equals("customer")) {
-
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String s = gson.toJson(si.ifTopicisCustomer(key));
+			return Response.status(Response.Status.OK).entity(s).build();
 		}
 		if (topic.equals("order")) {
 
