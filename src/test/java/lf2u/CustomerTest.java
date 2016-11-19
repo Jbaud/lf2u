@@ -106,7 +106,11 @@ public class CustomerTest extends JerseyTest {
 		
 		assertEquals(getOrders.get(0).getOID(), order.getOID());
 		
+		fi.cancelOrder(getOrders.get(0).getOID(),"cancelled");
 		
+		List<Order> getorders = fi.getAllOrders();
+		
+		assertEquals(getorders.get(0).getStatus(), "cancelled");
 	
 	}
 	

@@ -54,6 +54,10 @@ public class Farmer {
 		this.personal_info=info;
 	}
 	
+	public Personal_info getInfo(){
+		return this.personal_info;
+	}
+	
 	public void setDelivery(Delivers_to deliversto){
 		this.delivers_to=deliversto;
 	}

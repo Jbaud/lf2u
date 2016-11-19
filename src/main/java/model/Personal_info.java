@@ -27,5 +27,12 @@ public class Personal_info {
 	public String getPersonalName(){
 		return this.name;
 	}
+	
+	public String getPersonalEmail(){
+		return this.email;
+	}
+	public String getPersonalPhone(){
+		return this.phone;
+	}
 
 }

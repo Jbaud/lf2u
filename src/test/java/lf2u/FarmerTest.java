@@ -25,6 +25,7 @@ import controller.FarmerInterface;
 import controller.FarmerManager;
 import model.Delivers_to;
 import model.Farm_info;
+import model.Farm_info_Presentation;
 import model.Farmer;
 import model.FarmerProduct;
 import model.FarmerReport;
@@ -161,5 +162,9 @@ public class FarmerTest extends JerseyTest {
 		
 	}
 	 
+	@Test
+	public void Farm_info_presentation(){
+		//Farm_info_presentation test = new Farm_info_Presentation("123", "Jules", address, phone, web)
+	}
 	
 }
