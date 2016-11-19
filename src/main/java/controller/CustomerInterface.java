@@ -16,5 +16,5 @@ public interface CustomerInterface {
 	List<Order> viewOrder(String cid);
 	Presentation viewOrderByOid(String oid);
 	void cancelOrder(String oid,String newvalue);
-
+	List<Presentation> getAllPresentation();
 }

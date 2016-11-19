@@ -8,6 +8,7 @@ import model.Customer;
 import model.Farmer;
 import model.NullCustomer;
 import model.NullFarmer;
+import model.NullPresentation;
 import model.Presentation;
 
 public class Search implements SearchInterface {
@@ -79,8 +80,32 @@ public class Search implements SearchInterface {
 
 	@Override
 	public List<Presentation> ifTopicisOrder(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		
+
+		List<Presentation> allPresentation = ci.getAllPresentation();
+		
+		
+
+		if (key.equals("")) {
+			return allPresentation;
+		}
+		
+		
+		List<Presentation> returnPresentation = new ArrayList<Presentation>();
+
+		Iterator<Presentation> ma = allPresentation.listIterator();
+		while (ma.hasNext()) {
+			Presentation m = ma.next();
+			if (m.getOid().contains(key)) {
+				returnPresentation.add(m);
+				return returnPresentation;
+			}
+
+		}
+		// there is nothing here
+		returnPresentation.add(new NullPresentation());
+		return (returnPresentation);
+	
 	}
 
 }

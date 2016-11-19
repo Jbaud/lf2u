@@ -259,6 +259,11 @@ public class CustomerManager implements CustomerInterface {
 		}
 	}
 
+	@Override
+	public List<Presentation> getAllPresentation() {
+		return Presentations;
+	}
+
 }
 
 class FarmDeserializer implements JsonDeserializer<Farm_info> {
