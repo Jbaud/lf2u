@@ -29,8 +29,14 @@ import controller.FarmerManager;
 import controller.ManagerInterface;
 import controller.ManagerManager;
 import model.Customer;
+import model.Delivers_to;
+import model.Farm_info;
+import model.Farmer;
+import model.FarmerProduct;
+import model.ManagerProduct;
 import model.Order;
 import model.OrderDetail;
+import model.Personal_info;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -67,16 +73,28 @@ public class CustomerTest extends JerseyTest {
 	@Test
 	public void CreateOrder(){
 		
+		Farm_info test = new Farm_info("test", "123", "123","test");
+		Personal_info test2 = new Personal_info("test", "test", "test");
+		List<String> list = new ArrayList<String>();
+		list.add("123");
+		Delivers_to test3 = new Delivers_to(list);
+		//Farmer newFarmer = new Farmer(test, test2, test3);
 		
-		
-		
+		ManagerProduct managerProduct = mi.createAProduct("potatoes");
+		Farmer newFarmer = farmerint.createFarmer(test, test2, test3);
+		FarmerProduct d_farmerProduct = new FarmerProduct(newFarmer.getFarmerID(), managerProduct.getGcpid(), "test", "20160101", "20160102", 2, "lb", "url");
+		FarmerProduct farmerProduct = farmerint.createAProduct(d_farmerProduct);
 		Customer newCustomer = new Customer("jules", "1", "1", "1", "1");
+		Customer sendCustomer = fi.createCustomer(newCustomer);
 		OrderDetail newOrderDetail = new OrderDetail("test", 2.3f);
-		List<OrderDetail> list = new ArrayList<OrderDetail>();
-		list.add(newOrderDetail);
-		Order newOrder = new Order("123", list);
+		List<OrderDetail> list2 = new ArrayList<OrderDetail>();
+		list2.add(newOrderDetail);
 		
-		Order order = fi.createOrder("1", newOrder);
+		Order newOrder = new Order(newFarmer.getFarmerID(), list2);
+		
+		Order order = fi.createOrder(sendCustomer.getCustomerCID(), newOrder);
+		
+		assertEquals(order.getFid(), newFarmer.getFarmerID());
 	
 	}
 	

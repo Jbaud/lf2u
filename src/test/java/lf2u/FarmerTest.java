@@ -110,14 +110,14 @@ public class FarmerTest extends JerseyTest {
 	@Test
 	public void CreateProduct(){
 		
-		Farm_info test = new Farm_info("test", "123", "123");
-		Personal_info test2 = new Personal_info("test", "test", "test");
+		Farm_info test = new Farm_info("test2", "124", "124");
+		Personal_info test2 = new Personal_info("test2", "test2", "test2");
 		List<String> list = new ArrayList<String>();
-		list.add("123");
+		list.add("124");
 		Delivers_to test3 = new Delivers_to(list);
 		Farmer newFarmer = fi.createFarmer(test, test2,test3 );
 		
-		FarmerProduct test4 = new FarmerProduct(newFarmer.getFarmerID(), "123", "please", "now", "never", 1, "lb", "url");
+		FarmerProduct test4 = new FarmerProduct(newFarmer.getFarmerID(), "124", "please2", "now2", "never2", 2, "lb2", "url2");
 		
 		FarmerProduct test5 = fi.createAProduct(test4);
 		assertEquals(test5.getBelongs_to(), newFarmer.getFarmerID());
@@ -137,13 +137,13 @@ public class FarmerTest extends JerseyTest {
 		
 		// search by zip
 		
-		List<SimpleFarmer> test9 = fi.searchByZip("123");
+		List<SimpleFarmer> test9 = fi.searchByZip("124");
 		
 		assertEquals(test9.get(0).getFid(),newFarmer.getFarmerID());
 		
 		fi.updateFarmer(newFarmer.getFarmerID(), test, test2, test3);
 		
-		assertEquals(newFarmer.getFarmInfo().getName(), "test");
+		assertEquals(newFarmer.getFarmInfo().getName(), "test2");
 		
 		
 		Response output = target("/farmers/"+newFarmer.getFarmerID()+"/products").request().get();
