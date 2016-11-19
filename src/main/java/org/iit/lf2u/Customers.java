@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 public class Customers {
 
 	private CustomerInterface ci = new CustomerManager();
+	private FarmerInterface fi = new FarmerManager();
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -99,6 +100,7 @@ public class Customers {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAnOrder(@Context UriInfo uriInfo, @PathParam("cid") String cid, String json) {
 		// check if order exists
+		FarmerProduct fp;
 		String id;
 		Customer c = ci.viewCustomer(cid);
 		if (c.isNil()) {
@@ -111,19 +113,16 @@ public class Customers {
 
 			// we must check if fspid exists
 			List<OrderDetail> tocheck = cud.getOrderDetail();
-
+			
 			for (OrderDetail d : tocheck) {
-				Client client = Client.create();
-
-				WebResource webResource = client.resource("http://localhost:8080/lf2u/farmers/" + cud.getFid()
-						+ "/products/" + d.getFspidFromOrderDetail());
-
-				ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-				if (response.getStatus() == 404) {
+				
+				fp = fi.getFarmerProduct(d.getFspidFromOrderDetail());
+				// beg
+				if(fp.isNil()){
 					return Response.status(Response.Status.NOT_FOUND)
 							.entity("Entity not found for fspid: " + d.getFspidFromOrderDetail()).build();
 				}
-
+				
 			}
 			// we know that all fspid do exist:
 			Order createdOrder = ci.createOrder(cid, cud);

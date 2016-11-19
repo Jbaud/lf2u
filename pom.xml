@@ -8,7 +8,6 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>lf2u</name>
-
 	<build>
 		<finalName>lf2u</finalName>
 		<plugins>

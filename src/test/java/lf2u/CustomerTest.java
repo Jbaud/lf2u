@@ -37,6 +37,7 @@ import model.ManagerProduct;
 import model.Order;
 import model.OrderDetail;
 import model.Personal_info;
+import model.Presentation;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -95,6 +96,17 @@ public class CustomerTest extends JerseyTest {
 		Order order = fi.createOrder(sendCustomer.getCustomerCID(), newOrder);
 		
 		assertEquals(order.getFid(), newFarmer.getFarmerID());
+		
+		
+		Presentation newPresentation = fi.viewOrderByOid(order.getOID());
+		
+		assertEquals(newPresentation.getOid(), order.getOID());
+		
+		List<Order> getOrders = fi.viewOrder(newCustomer.getCustomerCID());
+		
+		assertEquals(getOrders.get(0).getOID(), order.getOID());
+		
+		
 	
 	}
 	
