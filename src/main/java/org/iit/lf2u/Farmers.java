@@ -177,7 +177,6 @@ public class Farmers {
 			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for ID: " + fid).build();
 		} else {
 			JSONObject obj = new JSONObject(json);
-			// Integer newvalue = obj.getInt("delivery_charge");
 			float newvalue = BigDecimal.valueOf(obj.getDouble("delivery_charge")).floatValue();
 			m.updateDeliveryCharge(newvalue);
 			return Response.status(Response.Status.OK).build();
