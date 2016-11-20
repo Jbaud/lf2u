@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.google.gson.annotations.Expose;
 
 public class FarmerProduct {
-	
 
 	private transient String belongs_to;
 	@Expose(deserialize = false)
@@ -17,69 +16,71 @@ public class FarmerProduct {
 	private float price;
 	private String product_unit;
 	private String image;
-	
-	
-	public FarmerProduct(){
-		
-	}
-	
-	public FarmerProduct(String belongs_to,String gcpid,String note,String start_date,String end_date,Integer price,String product_unit,String image){
-		//this.fspid=UUID.randomUUID().toString();
-		this.belongs_to=belongs_to;
-		this.gcpid=gcpid;
-		this.note=note;
-		this.start_date=start_date;
-		this.end_date=end_date;
-		this.price=price;
-		this.product_unit=product_unit;
-		this.image=image;
-	}
-	
-	
 
-	public void initFSPID(){
-		this.fspid=UUID.randomUUID().toString();
+	public FarmerProduct() {
+
 	}
-	
-	//setters
-	
-	public void setBelongs_to_whom(String belongs_to ){
-		this.belongs_to=belongs_to;
+
+	public FarmerProduct(String belongs_to, String gcpid, String note, String start_date, String end_date,
+			Integer price, String product_unit, String image) {
+		// this.fspid=UUID.randomUUID().toString();
+		this.belongs_to = belongs_to;
+		this.gcpid = gcpid;
+		this.note = note;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.price = price;
+		this.product_unit = product_unit;
+		this.image = image;
 	}
-	
-	public void setGcpid(String newGcpid){
-		this.gcpid=newGcpid;
+
+	public void initFSPID() {
+		this.fspid = UUID.randomUUID().toString();
 	}
-	public void setNote(String newnote){
-		this.note=newnote;
+
+	// setters
+	public void setBelongs_to_whom(String belongs_to) {
+		this.belongs_to = belongs_to;
 	}
-	public void setStart(String newStart){
-		this.start_date=newStart;
+
+	public void setGcpid(String newGcpid) {
+		this.gcpid = newGcpid;
 	}
-	public void setEnd(String newEnd){
-		this.end_date=newEnd;
+
+	public void setNote(String newnote) {
+		this.note = newnote;
 	}
-	public void setPrice(float newPrice){
-		this.price=newPrice;
+
+	public void setStart(String newStart) {
+		this.start_date = newStart;
 	}
-	public void setUnit(String unit){
-		this.product_unit=unit;
+
+	public void setEnd(String newEnd) {
+		this.end_date = newEnd;
 	}
-	public void setImage(String image){
-		this.image=image;
+
+	public void setPrice(float newPrice) {
+		this.price = newPrice;
 	}
-	
-	//matches
-	
+
+	public void setUnit(String unit) {
+		this.product_unit = unit;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	// matches
+
 	public boolean matchesId(String fspid) {
-        return(fspid.equals(this.fspid));
-    }
+		return (fspid.equals(this.fspid));
+	}
 	// getters
-	
-	public String getFspid(){
+
+	public String getFspid() {
 		return this.fspid;
 	}
-	
 
 	public String getBelongs_to() {
 		return belongs_to;
@@ -109,22 +110,21 @@ public class FarmerProduct {
 		return image;
 	}
 
-	public float getprice(){
+	public float getprice() {
 		return this.price;
 	}
-	
-	public String belongs_to_whom(){
+
+	public String belongs_to_whom() {
 		return this.belongs_to;
 	}
-	
-	public String getGcpid(){
+
+	public String getGcpid() {
 		return this.gcpid;
 	}
-	
-	
-	//nil
-	
+
+	// nil
+
 	public boolean isNil() {
-        return false;
-    }
+		return false;
+	}
 }

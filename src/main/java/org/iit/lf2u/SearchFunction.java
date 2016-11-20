@@ -29,7 +29,7 @@ public class SearchFunction {
 	public Response search(@QueryParam("topic") String topic, @QueryParam("key") String key) {
 
 		if(topic == null){
-			return Response.status(404).build();
+			return Response.status(200).build();
 		}
 		
 		System.out.println(topic);

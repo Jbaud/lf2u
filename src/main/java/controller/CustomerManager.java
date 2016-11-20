@@ -264,6 +264,19 @@ public class CustomerManager implements CustomerInterface {
 		return Presentations;
 	}
 
+	@Override
+	public Presentation updateOrderStatus(String oid, String newvalue) {
+				Iterator<Presentation> ma = Presentations.listIterator();
+				while (ma.hasNext()) {
+					Presentation m = ma.next();
+					if (m.matchesId(oid)) {
+						m.setStatus(newvalue);
+						return m;
+					}
+				}
+		return (new NullPresentation());
+	}
+
 }
 
 class FarmDeserializer implements JsonDeserializer<Farm_info> {

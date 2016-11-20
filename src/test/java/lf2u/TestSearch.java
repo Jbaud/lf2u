@@ -5,7 +5,20 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+import org.glassfish.jersey.test.TestProperties;
+import org.iit.lf2u.Customers;
+import org.iit.lf2u.SearchFunction;
 import org.junit.Test;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 import controller.CustomerInterface;
 import controller.CustomerManager;
@@ -26,26 +39,46 @@ import model.OrderDetail;
 import model.Personal_info;
 import model.Presentation;
 
-public class TestSearch {
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+
+public class TestSearch extends JerseyTest {
 	
 	private FarmerInterface fi = new FarmerManager();
 	private CustomerInterface ci = new CustomerManager();
 	private SearchInterface si = new Search();
 	private ManagerInterface mi = new ManagerManager();
 	
+	
+	
+	@Override
+	public Application configure() {
+		enable(TestProperties.LOG_TRAFFIC);
+		enable(TestProperties.DUMP_ENTITY);
+		return new ResourceConfig(SearchFunction.class);
+	}
+	
 	@Test
 	public void TestSearchFarm(){
 		
-		Farm_info test = new Farm_info("test3", "125", "125");
+		Farm_info test = new Farm_info("test3", "xyz", "125");
 		Personal_info test2 = new Personal_info("test4", "test5", "test6");
 		List<String> list = new ArrayList<String>();
 		list.add("125");
 		Delivers_to test3 = new Delivers_to(list);
 		Farmer newFarmer = fi.createFarmer(test, test2,test3 );
 		
-		List<Farmer> foundFarmers = si.ifTopicisFarm("test3");
+		List<Farmer> foundFarmers = new ArrayList<Farmer>();
+		foundFarmers = si.ifTopicisFarm("xyz");
 		
-		assertEquals("should be the same",foundFarmers.get(0).getFarmInfo().getName(), newFarmer.getFarmInfo().getName());
+		System.out.println("here : "+foundFarmers.get(0).getFarmerID());
+		System.out.println("compare to : "+newFarmer.getFarmerID());
+		
+		assertEquals("should be the same",foundFarmers.get(0).getFarmerID(), newFarmer.getFarmerID());
 		
 	}
 	
@@ -89,6 +122,5 @@ public class TestSearch {
 		assertEquals(presList.get(0).getOid(), order.getOID());
 				
 	}
-	
 
 }

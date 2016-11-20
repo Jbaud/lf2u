@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="lf2u.FarmerTest" time="0.523" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="lf2u.FarmerTest" time="0.593" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/jre/lib"/>
@@ -62,9 +62,10 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="lf2u.FarmerTest" name="CreateProduct" time="0.149"/>
-  <testcase classname="lf2u.FarmerTest" name="testGetNonExistingFarmer" time="0.125"/>
-  <testcase classname="lf2u.FarmerTest" name="ViewFarmer" time="0.092"/>
-  <testcase classname="lf2u.FarmerTest" name="testFetchAll" time="0.101"/>
-  <testcase classname="lf2u.FarmerTest" name="CreateAFarmer" time="0.056"/>
+  <testcase classname="lf2u.FarmerTest" name="CreateProduct" time="0.159"/>
+  <testcase classname="lf2u.FarmerTest" name="Farm_info_presentation" time="0.082"/>
+  <testcase classname="lf2u.FarmerTest" name="testGetNonExistingFarmer" time="0.106"/>
+  <testcase classname="lf2u.FarmerTest" name="ViewFarmer" time="0.082"/>
+  <testcase classname="lf2u.FarmerTest" name="testFetchAll" time="0.097"/>
+  <testcase classname="lf2u.FarmerTest" name="CreateAFarmer" time="0.067"/>
 </testsuite>

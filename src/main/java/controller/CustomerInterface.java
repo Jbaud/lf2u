@@ -17,4 +17,5 @@ public interface CustomerInterface {
 	Presentation viewOrderByOid(String oid);
 	void cancelOrder(String oid,String newvalue);
 	List<Presentation> getAllPresentation();
+	Presentation updateOrderStatus(String oid, String newValue);
 }

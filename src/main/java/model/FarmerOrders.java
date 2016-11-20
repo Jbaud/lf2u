@@ -23,24 +23,6 @@ public class FarmerOrders {
 		
 	}
 
-	public FarmerOrders(String oid, float products_total, float delivery_charge, float order_total, String status,
-			String order_date, String planned_delivery_date, String actual_delivery_date, Ordered_by ordered_by,
-			String delivery_address, String note, List<order_detail_presentation> order_detail) {
-		super();
-		this.oid = oid;
-		this.products_total = products_total;
-		this.delivery_charge = delivery_charge;
-		this.order_total = order_total;
-		this.status = status;
-		this.order_date = order_date;
-		this.planned_delivery_date = planned_delivery_date;
-		this.actual_delivery_date = actual_delivery_date;
-		this.ordered_by = ordered_by;
-		this.delivery_address = delivery_address;
-		this.note = note;
-		this.order_detail = order_detail;
-	}
-
 	public String getOid() {
 		return oid;
 	}

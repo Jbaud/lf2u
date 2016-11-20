@@ -14,13 +14,7 @@ public class FarmerReport {
 	public FarmerReport(){
 		
 	}
-	
-	public FarmerReport(String frid,String name, FarmerOrders orders){
-		this.frid=frid;
-		this.name=name;
-		this.orders.add(orders);
-	}
-	
+		
 	public void setFrid(String frid){
 		this.frid=frid;
 	}
